@@ -1,5 +1,12 @@
 import 'tailwindcss/tailwind.css'
+import { ThemeProvider } from '../components/ThemeProvider.js'
 
-const App = ({ Component, pageProps }) => <Component {...pageProps} />
+function App({ Component, pageProps }) {
+    return (
+        <ThemeProvider>
+            <Component {...pageProps} />
+        </ThemeProvider>
+    )
+}
 
 export default App

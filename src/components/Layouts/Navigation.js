@@ -18,7 +18,7 @@ const Navigation = ({ user }) => {
     const [open, setOpen] = useState(false)
 
     return (
-        <nav className="bg-white border-b border-gray-100">
+        <nav className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
             {/* Primary Navigation Menu */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
@@ -105,7 +105,7 @@ const Navigation = ({ user }) => {
 
             {/* Responsive Navigation Menu */}
             {open && (
-                <div className="block sm:hidden">
+                <div className="block sm:hidden dark:bg-gray-900 dark:text-gray-300">
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
                             href="/dashboard"
