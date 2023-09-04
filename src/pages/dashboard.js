@@ -39,13 +39,17 @@ const Dashboard = () => {
                             </div>
                             <ul className="mt-6">
                                 <li className="border-b border-gray-300 dark:border-gray-700 py-2">
-                                    <span className="text-gray-800 dark:text-gray-200">Task 1</span>
+                                    <span className="text-gray-800 dark:text-gray-200">
+                                        Task 1
+                                    </span>
                                     <button className="float-right bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
                                         Delete
                                     </button>
                                 </li>
                                 <li className="border-b border-gray-300 dark:border-gray-700 py-2">
-                                    <span className="text-gray-800 dark:text-gray-200">Task 2</span>
+                                    <span className="text-gray-800 dark:text-gray-200">
+                                        Task 2
+                                    </span>
                                     <button className="float-right bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
                                         Delete
                                     </button>

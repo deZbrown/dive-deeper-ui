@@ -8,7 +8,7 @@ module.exports = {
         './app/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
     ],
-    darkMode: 'media',
+    darkMode: 'class',
     theme: {
         container: {
             center: true,
