@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
+import Logo from '@/components/Logo'
 import AuthCard from '@/components/AuthCard'
 import AuthSessionStatus from '@/components/AuthSessionStatus'
 import Button from '@/components/Button'
@@ -50,7 +50,7 @@ const Login = () => {
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500 dark:text-gray-200" />
+                        <Logo />
                     </Link>
                 }>
                 {/* Session Status */}

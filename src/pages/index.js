@@ -17,7 +17,7 @@ export default function Home() {
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
                 <Register user={user} />
 
-                <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto sm:px-6 lg:px-8 mt-4">
                     <Logo />
 
                     <AboutUs />

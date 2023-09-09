@@ -1,18 +1,20 @@
 import React from 'react'
 import Image from 'next/image'
 
-const Logo = () => {
+const Logo = ({ size = 200 }) => {
     const imageStyle = {
         borderRadius: '50%',
+        width: `${size}px`,
+        height: `${size}px`,
     }
 
     return (
-        <div className="flex justify-center pt-8 sm:justify-start sm:pt-0">
+        <div className="flex pt-4 justify-center sm:justify-start sm:pt-0 mb-5">
             <Image
                 src="/logo.jpeg"
                 alt="Dive Deeper"
-                width={200}
-                height={200}
+                width={size}
+                height={size}
                 style={imageStyle}
             />
         </div>
