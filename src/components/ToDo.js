@@ -95,7 +95,7 @@ const ToDo = () => {
     }
 
     return (
-        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-8">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-1">
             <div className="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                 <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight mb-4">
                     To-Do List
