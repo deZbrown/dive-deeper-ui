@@ -1,17 +1,20 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import EditAndDelete from '@/components/AppButton'
 import axios from '@/lib/axios'
 import { useState, useEffect } from 'react'
 
 const ToDo = () => {
     const [task, setTask] = useState('')
     const [tasks, setTasks] = useState([])
+    const [editingTaskId, setEditingTaskId] = useState(null)
+    const [editedValue, setEditedValue] = useState('')
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
                 const response = await axios.get('api/v1/tasks', {
-                    withCredentials: true
+                    withCredentials: true,
                 })
                 setTasks(response.data)
             } catch (error) {
@@ -46,6 +49,51 @@ const ToDo = () => {
         }
     }
 
+    const startEditing = (taskId, taskTitle) => {
+        setEditingTaskId(taskId)
+        setEditedValue(taskTitle)
+    }
+
+    const updateTask = async taskId => {
+        try {
+            const response = await axios.put(
+                `api/v1/tasks/${taskId}`,
+                { title: editedValue },
+                { withCredentials: true },
+            )
+
+            if (response.status === 200) {
+                // Update the task list locally without fetching again
+                const updatedTasks = tasks.map(task =>
+                    task.id === taskId ? { ...task, title: editedValue } : task,
+                )
+                setTasks(updatedTasks)
+
+                // Reset editing state
+                setEditingTaskId(null)
+                setEditedValue('')
+            }
+        } catch (error) {
+            console.error('Error updating task:', error)
+        }
+    }
+
+    const deleteTask = async taskId => {
+        try {
+            const response = await axios.delete(`api/v1/tasks/${taskId}`, {
+                withCredentials: true,
+            })
+
+            if (response.status === 204) {
+                // Filter out the task with the given ID from the tasks list
+                const updatedTasks = tasks.filter(task => task.id !== taskId)
+                setTasks(updatedTasks)
+            }
+        } catch (error) {
+            console.error('Error deleting task:', error)
+        }
+    }
+
     return (
         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-8">
             <div className="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
@@ -58,12 +106,38 @@ const ToDo = () => {
                         placeholder="New task..."
                         value={task}
                         onChange={e => setTask(e.target.value)}
-                        className="border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+                        className="
+                            border
+                            rounded
+                            w-full
+                            py-2
+                            px-
+                            text-gray-700
+                            dark:text-gray-300
+                            leading-tight
+                            focus:outline-none
+                            focus:shadow-outline
+                            dark:bg-gray-700
+                            dark:border-gray-600
+                        "
                     />
                     <Button
                         onClick={addTask}
                         variant="primary"
-                        className="bg-black text-white hover:bg-gray-100 hover:text-black dark:bg-white dark:text-black dark:hover:bg-gray-800 dark:hover:text-white rounded py-1 px-3 mt-2">
+                        className="
+                            bg-black 
+                            text-white
+                            hover:bg-gray-100
+                            hover:text-black
+                            dark:bg-white
+                            dark:text-black
+                            dark:hover:bg-gray-800
+                            dark:hover:text-white
+                            rounded
+                            py-1
+                            px-3
+                            mt-2
+                        ">
                         Add Task
                     </Button>
                 </div>
@@ -71,23 +145,38 @@ const ToDo = () => {
                     {tasks.map(task => (
                         <li
                             key={task.id}
-                            className="border-b border-gray-300 dark:border-gray-700 py-6 flex items-center justify-between">
-                            <span className="text-gray-800 dark:text-gray-200 pl-4">
-                                {task.title}{' '}
-                                {/* Assuming each task object has a name property */}
+                            className="
+                                py-6
+                                flex
+                                items-center
+                                justify-between
+                            ">
+                            <span
+                                className="
+                                text-gray-800
+                                dark:text-gray-200
+                                pl-4
+                            ">
+                                {editingTaskId === task.id ? (
+                                    <Input
+                                        value={editedValue}
+                                        onChange={e =>
+                                            setEditedValue(e.target.value)
+                                        }
+                                        editing={true}
+                                    />
+                                ) : (
+                                    <span className="text-gray-800 dark:text-gray-200 pl-4">
+                                        {task.title}
+                                    </span>
+                                )}
                             </span>
-                            <div className="flex space-x-0">
-                                <Button
-                                    variant="destructive"
-                                    className="float-right bg-black text-white hover:bg-gray-100 hover:text-black dark:bg-gray-300 dark:text-black dark:hover:bg-gray-400 px-4 rounded mr-3">
-                                    Edit
-                                </Button>
-                                <Button
-                                    variant="destructive"
-                                    className="float-right bg-black text-white hover:bg-gray-100 hover:text-black dark:bg-gray-300 dark:text-black dark:hover:bg-gray-400 px-2 rounded mr-3">
-                                    Delete
-                                </Button>
-                            </div>
+                            <EditAndDelete
+                                onEdit={() => startEditing(task.id, task.title)}
+                                onUpdate={() => updateTask(task.id)}
+                                onDelete={() => deleteTask(task.id)}
+                                isEditing={editingTaskId === task.id}
+                            />
                         </li>
                     ))}
                 </ul>
